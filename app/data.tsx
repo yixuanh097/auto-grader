@@ -2,12 +2,12 @@ export const rubrics_completion = [
   {
     id: 0,
     desc: "completed",
-    points: 1, // fraction of points earned
+    points: 0, // fraction of points deducted
   },
   {
     id: 1,
     desc: "no attempt",
-    points: 0,
+    points: 1,
   },
 ];
 
@@ -15,38 +15,38 @@ export const rubrics_correctness = [
   {
     id: 0,
     desc: "all correct",
-    points: 1,
+    points: 0,
   },
   {
     id: 1,
     desc: "missing/incorrect unit",
-    points: 0.9,
+    points: 0.1,
   },
 
   {
     id: 2,
     desc: "incorrect sign",
-    points: 0.9,
+    points: 0.1,
   },
 
   {
     id: 3,
     desc: "incorrect answer", // correct approach but incorrect numerical
-    points: 0.8,
+    points: 0.2,
   },
   {
     id: 4,
     desc: "incorrect approach",
-    points: 0.25,
+    points: 0.75,
   },
   {
     id: 5,
     desc: "no attempt",
-    points: 0,
+    points: 1,
   },
   {
     id: 6,
-    desc: "incoorect equations", // partially correct approach
+    desc: "incorect equations", // partially correct approach
     points: 0.5,
   },
 ];
