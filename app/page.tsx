@@ -1,5 +1,7 @@
 "use client";
 
+import { renderToString, renderToStaticMarkup } from "react-dom/server";
+
 import { questions, rubrics_correctness, rubrics_completion } from "./data.tsx";
 
 import { useState } from "react";
@@ -26,10 +28,35 @@ export default function Home() {
       <div>
         <QuestionPanel questionInfo={questions} onChange={setScore} />
       </div>
-      <h1>Calculated Score: {calcScore(score)}</h1>
-      <ol>{feedback_all}</ol>
+      <div>
+        <h1>Calculated Score: {calcScore(score)}</h1>
+        <ol>{feedback_all}</ol>
+        <button
+          onClick={() => {
+            copyToClipBoard(feedback_all);
+          }}
+          style={{
+            backgroundColor: "grey",
+            color: "black",
+            padding: "3px 5px",
+            borderRadius: "3px",
+          }}
+        >
+          copy to clipboard
+        </button>
+      </div>
     </div>
   );
+}
+async function copyToClipBoard(text) {
+  const formatted = renderToStaticMarkup(text)
+    .replaceAll("<li>", "")
+    .replaceAll("</li>", "\n");
+  try {
+    await navigator.clipboard.writeText(formatted);
+  } catch (err) {
+    console.error("failed to copy text", err);
+  }
 }
 
 function calcScore(scores) {
@@ -77,7 +104,7 @@ function Question({ num, rubrics, points, onCheck }) {
               handleScoreChange(onCheck, item.desc, num, points, fraction);
             }}
           />
-          {item.desc}
+          {item.desc}: -{fraction * points}
         </label>
       </li>
     );
@@ -85,7 +112,9 @@ function Question({ num, rubrics, points, onCheck }) {
 
   return (
     <>
-      <b style={{ margin: "7px" }}>Question {num}</b>
+      <b style={{ margin: "7px" }}>
+        Question {num}: {points}
+      </b>
       <ol>{listItems}</ol>
       <p>
         <br />
