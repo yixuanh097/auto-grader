@@ -1,6 +1,7 @@
 "use client";
+import SplitPane from "react-split-pane";
 
-import { renderToString, renderToStaticMarkup } from "react-dom/server";
+import { renderToStaticMarkup } from "react-dom/server";
 
 import { questions, rubrics_correctness, rubrics_completion } from "./data.tsx";
 
@@ -112,13 +113,17 @@ function Question({ num, rubrics, points, onCheck }) {
 
   return (
     <>
-      <b style={{ margin: "7px" }}>
-        Question {num}: {points}
-      </b>
-      <ol>{listItems}</ol>
-      <p>
-        <br />
-      </p>
+      <SplitPane split="vertical">
+        <div>
+          <b style={{ margin: "7px" }}>
+            Question {num}: {points}
+          </b>
+          <ol>{listItems}</ol>
+          <p>
+            <br />
+          </p>
+        </div>
+      </SplitPane>
     </>
   );
 }
