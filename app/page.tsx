@@ -1,4 +1,7 @@
 "use client";
+
+import Image from "next/image";
+
 import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
 
 import { renderToStaticMarkup } from "react-dom/server";
@@ -90,7 +93,7 @@ function handleScoreChange(setScores, description, number, points, frac) {
   });
 }
 
-function Question({ num, rubrics, points, onCheck }) {
+function Question({ num, rubrics, points, onCheck, answer }) {
   const [checkIndex, setCheckedIndex] = useState(-1);
   const listItems = rubrics.map((item) => {
     const fraction = item.points;
@@ -129,14 +132,21 @@ function Question({ num, rubrics, points, onCheck }) {
         </Panel>
         <PanelResizeHandle className="w-2 bg-slate-300" />
         <Panel defaultSize={30} minSize={20}>
-          <b>TODO:Images</b>
+          {renderImage(answer)}
         </Panel>
       </PanelGroup>
       <br />
     </>
   );
 }
-function renderImage(path) {}
+async function renderImage(path) {
+  console.log(path);
+  return (
+    <>
+      <Image width={300} height={300} src={path} alt={"answer key"} />
+    </>
+  );
+}
 
 function QuestionPanel({ questionInfo, onChange }) {
   const questionItems = questionInfo.map((item) => {
@@ -149,6 +159,7 @@ function QuestionPanel({ questionInfo, onChange }) {
           }
           points={item.points}
           onCheck={onChange}
+          answer={item.answer}
         />
       </li>
     );
