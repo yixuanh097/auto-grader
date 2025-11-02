@@ -1,5 +1,5 @@
 "use client";
-import SplitPane from "react-split-pane";
+import { PanelGroup, PanelResizeHandle, Panel } from "react-resizable-panels";
 
 import { renderToStaticMarkup } from "react-dom/server";
 
@@ -113,20 +113,30 @@ function Question({ num, rubrics, points, onCheck }) {
 
   return (
     <>
-      <SplitPane split="vertical">
-        <div>
-          <b style={{ margin: "7px" }}>
-            Question {num}: {points}
+      <PanelGroup direction="horizontal">
+        <Panel
+          defaultSize={30}
+          minSize={20}
+          className="bg-slate-100 rounded-lg flex items-center justify-left text-left p-3"
+        >
+          <b style={({ margin: "10px" }, { fontSize: "17px" })}>
+            Question {num}: {points} ~~~~
           </b>
           <ol>{listItems}</ol>
           <p>
             <br />
           </p>
-        </div>
-      </SplitPane>
+        </Panel>
+        <PanelResizeHandle className="w-2 bg-slate-300" />
+        <Panel defaultSize={30} minSize={20}>
+          <b>TODO:Images</b>
+        </Panel>
+      </PanelGroup>
+      <br />
     </>
   );
 }
+function renderImage(path) {}
 
 function QuestionPanel({ questionInfo, onChange }) {
   const questionItems = questionInfo.map((item) => {
